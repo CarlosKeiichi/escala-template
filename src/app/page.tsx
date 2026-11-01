@@ -1,69 +1,73 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import { supabase, variaveisConfiguradas } from "@/lib/supabase";
+
+type Estado =
+  | { tipo: "carregando" }
+  | { tipo: "sem-variaveis" }
+  | { tipo: "erro"; mensagem: string }
+  | { tipo: "ok"; funcionarios: number; turnos: number };
+
+export default function Inicio() {
+  const [estado, setEstado] = useState<Estado>({ tipo: "carregando" });
+
+  useEffect(() => {
+    async function verificar() {
+      if (!variaveisConfiguradas()) {
+        setEstado({ tipo: "sem-variaveis" });
+        return;
+      }
+      try {
+        const db = supabase();
+        const [f, t] = await Promise.all([
+          db.from("funcionarios").select("id", { count: "exact", head: true }),
+          db.from("turnos").select("id", { count: "exact", head: true }),
+        ]);
+        if (f.error) throw f.error;
+        if (t.error) throw t.error;
+        setEstado({ tipo: "ok", funcionarios: f.count ?? 0, turnos: t.count ?? 0 });
+      } catch (e) {
+        setEstado({ tipo: "erro", mensagem: e instanceof Error ? e.message : String(e) });
+      }
+    }
+    verificar();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="space-y-5">
+      <section className="cartao">
+        <h1 className="text-2xl font-bold">Sistema de escala, pronto para construir</h1>
+        <p className="mt-2 text-neutral-700">
+          Este é o ponto de partida. A estrutura, o banco de dados e a publicação já
+          estão configurados. As telas da escala serão criadas por você, com a IA,
+          durante a aula.
+        </p>
+      </section>
+
+      <section className="cartao">
+        <h2 className="text-lg font-semibold">Conexão com o banco de dados</h2>
+        {estado.tipo === "carregando" && <p className="mt-2 text-neutral-600">Verificando...</p>}
+        {estado.tipo === "sem-variaveis" && (
+          <p className="mt-2 text-red-700">
+            As variáveis do Supabase não foram configuradas. Na Vercel, em Settings &gt;
+            Environment Variables, adicione NEXT_PUBLIC_SUPABASE_URL e
+            NEXT_PUBLIC_SUPABASE_ANON_KEY e faça Redeploy.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        )}
+        {estado.tipo === "erro" && (
+          <p className="mt-2 text-red-700">
+            Banco conectado, mas as tabelas não responderam. Rode o arquivo
+            supabase/schema.sql no SQL Editor do Supabase. Detalhe: {estado.mensagem}
+          </p>
+        )}
+        {estado.tipo === "ok" && (
+          <p className="mt-2 text-green-700">
+            Banco conectado. {estado.funcionarios} funcionários e {estado.turnos} turnos
+            cadastrados. Tudo pronto para a Entrega 1.
+          </p>
+        )}
+      </section>
     </div>
   );
 }

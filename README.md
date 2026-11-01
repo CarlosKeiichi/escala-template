@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de escala de funcionários · template da aula
 
-## Getting Started
+Ponto de partida para criar, com IA, um sistema de escala para o seu restaurante.
+Você não precisa saber programar. Siga os passos na ordem; cada um tem uma checagem.
 
-First, run the development server:
+## O que vem pronto
+- Site publicado na Vercel a cada mudança no GitHub
+- Banco de dados no Supabase com as tabelas e dados de exemplo (`supabase/schema.sql`)
+- Contexto para a IA em `CLAUDE.md`
+- Os prompts da aula na pasta `prompts/`
+- Documentação da API de ponto de demonstração em `docs/api-ponto.md`
+- A ficha da solução em `docs/ficha-da-solucao.md`
 
+## Passo 1 · Copiar este template para a sua conta (GitHub)
+1. Clique no botão verde **Use this template** > **Create a new repository**.
+2. Marque a caixa **Include all branches** (ela traz as versões prontas de cada entrega).
+3. Nome: `escala-nomedoseurestaurante`. Escolha **Private**. Clique em **Create repository**.
+
+Checagem: você vê o seu repositório, com estes mesmos arquivos dentro.
+
+## Passo 2 · Criar as tabelas (Supabase)
+1. No seu projeto do Supabase, abra **SQL Editor** > **New query**.
+2. Abra o arquivo `supabase/schema.sql` deste repositório, copie tudo e cole no editor.
+3. Clique em **Run**.
+4. Em **Project Settings** > **API**, copie a **Project URL** e a chave **anon public**.
+
+Checagem: aparece "Success". Em **Table Editor** existem as tabelas `funcionarios`,
+`turnos`, `escalas`, `regras` e `configuracoes`, e `funcionarios` tem 8 linhas.
+
+## Passo 3 · Publicar (Vercel)
+1. Na Vercel, **Add New** > **Project** > **Import** no repositório do Passo 1.
+2. Em **Environment Variables**, adicione exatamente estes dois nomes, com os valores do Passo 2:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+3. Clique em **Deploy** e aguarde 1 a 2 minutos.
+
+Checagem: o link `escala-xxx.vercel.app` abre e mostra "Banco conectado. 8 funcionários e 2 turnos cadastrados".
+
+Se aparecer "variáveis não configuradas": confira os nomes (sem espaços) e clique em **Redeploy**.
+Se aparecer "tabelas não responderam": repita o Passo 2.
+
+## Passo 4 · Conectar a IA (Claude Code na web)
+1. Acesse **claude.ai/code** com a sua conta Claude Pro.
+2. Conecte o GitHub e autorize o acesso ao seu repositório.
+3. Selecione o repositório. Não envie nenhuma mensagem ainda.
+
+Checagem: o nome do seu repositório aparece no Claude Code.
+
+## Passo 5 · Abrir no celular
+Abra o link da Vercel no celular e use "Adicionar à tela inicial".
+
+## Os prompts
+Estão em `prompts/`, numerados na ordem da aula. Em cada um, o que está entre colchetes você
+troca pelos dados do seu restaurante (use a ficha da solução). O resto fica igual.
+
+## Rodar no seu computador (opcional)
 ```bash
+npm install
+cp .env.example .env.local   # preencha com os valores do Supabase
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Versões prontas (plano B)
+As branches `entrega-1`, `entrega-2` e `entrega-3` têm cada etapa concluída. Se precisar pular
+uma etapa, abra a branch no GitHub e faça merge na `main`; a Vercel publica sozinha.
