@@ -4,12 +4,15 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { CelulaEscala } from "@/components/CelulaEscala";
 import {
   adicionarNaEscala,
+  listarConfiguracoes,
   listarEscalas,
   listarFuncionarios,
+  listarRegras,
   listarTurnos,
   mensagemDeErro,
   removerDaEscala,
 } from "@/lib/consultas";
+import { CONFIG_PADRAO, calcularAlertas, chaveCelula, lerConfiguracoes, type Configuracoes } from "@/lib/regras";
 import {
   DIAS_SEMANA_CURTO,
   diaMes,
@@ -21,7 +24,7 @@ import {
   rotuloDia,
   somarDias,
 } from "@/lib/datas";
-import type { Escala, Funcionario, Turno } from "@/lib/tipos";
+import type { Escala, Funcionario, Regra, Turno } from "@/lib/tipos";
 
 export default function EscalaDaSemana() {
   const hoje = hojeISO();
@@ -30,6 +33,8 @@ export default function EscalaDaSemana() {
   const [turnos, setTurnos] = useState<Turno[]>([]);
   const [funcionarios, setFuncionarios] = useState<Funcionario[]>([]);
   const [escalas, setEscalas] = useState<Escala[]>([]);
+  const [regras, setRegras] = useState<Regra[]>([]);
+  const [config, setConfig] = useState<Configuracoes>(CONFIG_PADRAO);
   const [erro, setErro] = useState<string | null>(null);
   const [carregando, setCarregando] = useState(true);
 
@@ -37,14 +42,18 @@ export default function EscalaDaSemana() {
 
   const carregar = useCallback(async () => {
     try {
-      const [t, f, e] = await Promise.all([
+      const [t, f, e, r, c] = await Promise.all([
         listarTurnos(),
         listarFuncionarios(),
         listarEscalas(segunda, somarDias(segunda, 6)),
+        listarRegras(),
+        listarConfiguracoes(),
       ]);
       setTurnos(t);
       setFuncionarios(f.filter((x) => x.ativo));
       setEscalas(e);
+      setRegras(r);
+      setConfig(lerConfiguracoes(c));
       setErro(null);
     } catch (err) {
       setErro(mensagemDeErro(err));
@@ -67,6 +76,12 @@ export default function EscalaDaSemana() {
   }
 
   const porId = useMemo(() => new Map(funcionarios.map((f) => [f.id, f])), [funcionarios]);
+
+  // Regras da casa aplicadas à semana em tela
+  const alertas = useMemo(
+    () => calcularAlertas({ dias, turnos, funcionarios, escalas, regras, config }),
+    [dias, turnos, funcionarios, escalas, regras, config],
+  );
 
   function atribuicoes(data: string, turnoId: string) {
     return escalas
@@ -106,6 +121,7 @@ export default function EscalaDaSemana() {
         disponiveis={disponiveis(data, turno.id)}
         onAdicionar={(fid) => adicionar(data, turno.id, fid)}
         onRemover={remover}
+        alertas={alertas.porCelula.get(chaveCelula(data, turno.id)) ?? []}
       />
     );
   }
@@ -127,6 +143,28 @@ export default function EscalaDaSemana() {
 
       {erro && <p className="rounded-xl bg-red-50 p-3 text-red-700">{erro}</p>}
       {carregando && <p className="text-neutral-600">Carregando...</p>}
+
+      {!carregando && (
+        <section className={`cartao ${alertas.total > 0 ? "border-red-300 bg-red-50" : "border-green-300 bg-green-50"}`}>
+          <p className={`font-semibold ${alertas.total > 0 ? "text-red-800" : "text-green-800"}`}>
+            {alertas.total === 0
+              ? "Semana sem alertas"
+              : `${alertas.total} alerta${alertas.total > 1 ? "s" : ""} nesta semana`}
+          </p>
+          {alertas.daSemana.length > 0 && (
+            <ul className="mt-2 list-inside list-disc text-sm text-red-800">
+              {alertas.daSemana.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          )}
+          {alertas.porCelula.size > 0 && (
+            <p className="mt-2 text-sm text-red-800">
+              Turnos com gente de menos estão em vermelho na grade.
+            </p>
+          )}
+        </section>
+      )}
 
       {!carregando && funcionarios.length === 0 && (
         <p className="cartao text-neutral-700">Cadastre a equipe primeiro, na tela Equipe.</p>

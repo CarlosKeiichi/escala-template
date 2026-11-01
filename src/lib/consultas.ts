@@ -2,7 +2,7 @@
 // As telas chamam estas funções; nenhuma tela fala com o banco diretamente.
 
 import { supabase } from "./supabase";
-import type { Escala, Funcionario, Turno } from "./tipos";
+import type { Configuracao, Escala, Funcionario, Regra, Turno } from "./tipos";
 
 // ---------- Funcionários ----------
 
@@ -69,4 +69,33 @@ export async function removerDaEscala(id: string): Promise<void> {
 export function mensagemDeErro(e: unknown): string {
   if (e && typeof e === "object" && "message" in e) return String((e as { message: unknown }).message);
   return String(e);
+}
+
+// ---------- Regras e configurações ----------
+
+export async function listarRegras(): Promise<Regra[]> {
+  const { data, error } = await supabase().from("regras").select("*").order("funcao");
+  if (error) throw error;
+  return data as Regra[];
+}
+
+export async function criarRegra(regra: Omit<Regra, "id">): Promise<void> {
+  const { error } = await supabase().from("regras").insert(regra);
+  if (error) throw error;
+}
+
+export async function excluirRegra(id: string): Promise<void> {
+  const { error } = await supabase().from("regras").delete().eq("id", id);
+  if (error) throw error;
+}
+
+export async function listarConfiguracoes(): Promise<Configuracao[]> {
+  const { data, error } = await supabase().from("configuracoes").select("*");
+  if (error) throw error;
+  return data as Configuracao[];
+}
+
+export async function salvarConfiguracao(chave: string, valor: string): Promise<void> {
+  const { error } = await supabase().from("configuracoes").upsert({ chave, valor });
+  if (error) throw error;
 }
