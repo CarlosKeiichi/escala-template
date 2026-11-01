@@ -43,16 +43,32 @@ function traduzir(m: MarcacaoDoFornecedor): Marcacao {
   };
 }
 
+/** Dados de exemplo do dia pedido (docs/marcacoes-exemplo.json cobre alguns dias). */
+function exemploParaData(data: string): { marcacoes: Marcacao[]; aviso: string } {
+  const todas = exemplo as MarcacaoDoFornecedor[];
+  const doDia = todas.filter((m) => m.data === data);
+  if (doDia.length === 0) {
+    const datas = Array.from(new Set(todas.map((m) => m.data))).sort();
+    return {
+      marcacoes: [],
+      aviso: ` Não há dados de exemplo para ${data}; eles cobrem ${datas.join(" e ")}.`,
+    };
+  }
+  return { marcacoes: doDia.map(traduzir), aviso: "" };
+}
+
 export async function buscarMarcacoes(data: string): Promise<ResultadoMarcacoes> {
   const url = process.env.PONTO_API_URL;
   const token = process.env.PONTO_API_TOKEN;
 
   if (!url || !token) {
+    const ex = exemploParaData(data);
     return {
-      marcacoes: (exemplo as MarcacaoDoFornecedor[]).map(traduzir),
+      marcacoes: ex.marcacoes,
       fonte: "exemplo",
       aviso:
-        "PONTO_API_URL e PONTO_API_TOKEN não configuradas na Vercel. Mostrando dados de exemplo.",
+        "PONTO_API_URL e PONTO_API_TOKEN não configuradas na Vercel. Mostrando dados de exemplo." +
+        ex.aviso,
     };
   }
 
@@ -67,10 +83,11 @@ export async function buscarMarcacoes(data: string): Promise<ResultadoMarcacoes>
     const lista = (await resposta.json()) as MarcacaoDoFornecedor[];
     return { marcacoes: lista.map(traduzir), fonte: "api", aviso: null };
   } catch (e) {
+    const ex = exemploParaData(data);
     return {
-      marcacoes: (exemplo as MarcacaoDoFornecedor[]).map(traduzir),
+      marcacoes: ex.marcacoes,
       fonte: "exemplo",
-      aviso: `Não foi possível falar com a API de ponto (${e instanceof Error ? e.message : String(e)}). Mostrando dados de exemplo.`,
+      aviso: `Não foi possível falar com a API de ponto (${e instanceof Error ? e.message : String(e)}). Mostrando dados de exemplo.${ex.aviso}`,
     };
   }
 }
