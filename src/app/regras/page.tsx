@@ -36,7 +36,7 @@ export default function Regras() {
   }
 
   useEffect(() => {
-    // Carrega os dados ao abrir a tela.
+    // Carrega as regras ao abrir a tela.
     void (async () => {
       await carregar();
     })();

@@ -32,7 +32,7 @@ export default function Equipe() {
   }
 
   useEffect(() => {
-    // Carrega os dados ao abrir a tela.
+    // Carrega a lista ao abrir a tela.
     void (async () => {
       await carregar();
     })();
