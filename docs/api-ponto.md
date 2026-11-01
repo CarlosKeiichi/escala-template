@@ -4,11 +4,24 @@ API fictícia usada na aula para simular o sistema de ponto do restaurante. Ela 
 marcações (batidas) de ponto de 8 funcionários fictícios. Serve para construir e testar a
 integração; depois, troca-se pela API do fornecedor real mexendo só no adaptador.
 
-## Acesso
-- URL base: valor da variável de ambiente `PONTO_API_URL` (ex.: `https://api-ponto-demo.vercel.app`)
-- Token: valor da variável `PONTO_API_TOKEN`, enviado no cabeçalho `Authorization: Bearer <token>`
-- Sem token ou com token errado, a API responde `401` com `{"erro":"Token inválido"}`
-- As chamadas devem ser feitas no servidor (Route Handler), nunca no navegador
+## Acesso: três credenciais
+Como num fornecedor de verdade, a API pede três credenciais. Todas vêm de variáveis de ambiente;
+nenhuma fica no código.
+
+| Credencial | O que identifica | Variável de ambiente | Onde vai na chamada |
+| --- | --- | --- | --- |
+| Client ID | A conta (qual restaurante) | `PONTO_CLIENT_ID` | cabeçalho `X-Client-Id` |
+| API Key | O aplicativo que chama (identificação pública) | `PONTO_API_KEY` | cabeçalho `X-Api-Key` |
+| API Secret | A senha do aplicativo (só no servidor) | `PONTO_API_SECRET` | cabeçalho `Authorization: Bearer <secret>` |
+
+- URL base: variável `PONTO_API_URL` (ex.: `https://api-ponto-demo.vercel.app`)
+- Se uma credencial faltar ou estiver errada, a API responde `401` e o corpo diz qual foi
+  (ex.: `{"erro":"X-Api-Key inválida"}`)
+- As chamadas devem ser feitas no servidor (Route Handler), nunca no navegador: o API Secret não
+  pode aparecer no celular de ninguém
+- Fornecedores reais variam: alguns usam só uma API Key, outros trocam Client ID e Secret por um
+  token temporário antes de cada chamada. Isso é detalhe do adaptador (`src/lib/integracoes/ponto.ts`);
+  o resto do sistema não muda
 
 ## GET /api/funcionarios
 Lista os funcionários cadastrados no ponto.
@@ -28,7 +41,7 @@ Marcações de um dia. Também aceita um período: `?inicio=AAAA-MM-DD&fim=AAAA-
 [
   {
     "cpf": "12345678901",
-    "data": "2026-11-20",
+    "data": "2026-11-04",
     "entrada": "10:55",
     "saida_intervalo": "15:35",
     "volta_intervalo": "17:55",
@@ -55,4 +68,5 @@ Todo dia aberto tem, de propósito, um atraso, uma falta e uma hora extra entre 
 que trabalham naquele dia, para a tela de conferência ter o que mostrar.
 
 ## Se a API não responder
-Use `docs/marcacoes-exemplo.json` como dados de exemplo e avise na tela que são dados de exemplo.
+Use `docs/marcacoes-exemplo.json` (dias 04/11 e 05/11/2026) como dados de exemplo e avise na tela
+que são dados de exemplo.

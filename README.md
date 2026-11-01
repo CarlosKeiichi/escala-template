@@ -14,9 +14,10 @@ Você não precisa saber programar. Siga os passos na ordem; cada um tem uma che
 ## Passo 1 · Copiar este template para a sua conta (GitHub)
 1. Clique no botão verde **Use this template** > **Create a new repository**.
 2. Marque a caixa **Include all branches** (ela traz as versões prontas de cada entrega).
-3. Nome: `escala-nomedoseurestaurante`. Escolha **Private**. Clique em **Create repository**.
+3. Nome: `escala-nomedoseurestaurante`. Escolha **Public** (não há segredo no código; as chaves ficam na Vercel). Clique em **Create repository**.
+4. Convide a sua dupla: **Settings** > **Collaborators** > **Add people**, digite o usuário do GitHub dela. Ela aceita o convite pelo e-mail. Assim, se a sua cota acabar, a dupla continua no mesmo sistema.
 
-Checagem: você vê o seu repositório, com estes mesmos arquivos dentro.
+Checagem: você vê o seu repositório, com estes mesmos arquivos dentro, e a dupla aparece em Collaborators.
 
 ## Passo 2 · Criar as tabelas (Supabase)
 1. No seu projeto do Supabase, abra **SQL Editor** > **New query**.

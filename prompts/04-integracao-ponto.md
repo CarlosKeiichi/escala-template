@@ -2,7 +2,7 @@ Me mostre o plano antes e espere minha aprovação.
 
 Crie uma tela "Conferência do dia" que compara a escala planejada com as marcações reais de ponto.
 
-As marcações vêm de uma API externa. A documentação está no arquivo docs/api-ponto.md do projeto. A URL base e o token devem ficar em variáveis de ambiente (PONTO_API_URL e PONTO_API_TOKEN), nunca no código. Faça a chamada pelo lado do servidor, para o token não aparecer no navegador.
+As marcações vêm de uma API externa. A documentação está no arquivo docs/api-ponto.md do projeto. A URL base e as três credenciais (Client ID, API Key e API Secret) devem ficar em variáveis de ambiente (PONTO_API_URL, PONTO_CLIENT_ID, PONTO_API_KEY e PONTO_API_SECRET), nunca no código. Faça a chamada pelo lado do servidor, para o secret não aparecer no navegador.
 
 Na tela:
 1. Seletor de data (padrão: hoje).
