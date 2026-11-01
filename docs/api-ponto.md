@@ -15,6 +15,7 @@ nenhuma fica no código.
 | API Secret | A senha do aplicativo (só no servidor) | `PONTO_API_SECRET` | cabeçalho `Authorization: Bearer <secret>` |
 
 - URL base: variável `PONTO_API_URL` (ex.: `https://api-ponto-demo.vercel.app`)
+- Os valores da API de demonstração estão em `.env.example` e na página da aula; os do seu fornecedor, no painel dele
 - Se uma credencial faltar ou estiver errada, a API responde `401` e o corpo diz qual foi
   (ex.: `{"erro":"X-Api-Key inválida"}`)
 - As chamadas devem ser feitas no servidor (Route Handler), nunca no navegador: o API Secret não
