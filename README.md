@@ -58,9 +58,16 @@ Checagem: o nome do seu repositório aparece no Claude Code.
 Abra o link da Vercel no celular e use "Adicionar à tela inicial".
 
 ## Entrega 3 · variáveis da API de ponto
-Na Vercel, em **Settings** > **Environment Variables**, adicione `PONTO_API_URL` e `PONTO_API_TOKEN`
-(valores fornecidos na aula) e clique em **Redeploy**. Sem elas, a tela Conferência do dia mostra
-dados de exemplo e avisa.
+Na Vercel, em **Settings** > **Environment Variables**, adicione as quatro variáveis com os valores
+fornecidos na aula (depois, os do seu fornecedor):
+
+- `PONTO_API_URL` (endereço da API)
+- `PONTO_CLIENT_ID` (qual restaurante)
+- `PONTO_API_KEY` (qual aplicativo)
+- `PONTO_API_SECRET` (a senha do aplicativo, só no servidor)
+
+Se o deploy já tinha terminado quando você salvou, clique em **Redeploy**. Sem elas, a tela
+Conferência do dia mostra dados de exemplo e avisa.
 
 ## Os prompts
 Estão em `prompts/`, numerados na ordem da aula. Em cada um, o que está entre colchetes você

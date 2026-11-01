@@ -59,26 +59,47 @@ function exemploParaData(data: string): { marcacoes: Marcacao[]; aviso: string }
 
 export async function buscarMarcacoes(data: string): Promise<ResultadoMarcacoes> {
   const url = process.env.PONTO_API_URL;
-  const token = process.env.PONTO_API_TOKEN;
+  const clientId = process.env.PONTO_CLIENT_ID;
+  const apiKey = process.env.PONTO_API_KEY;
+  const apiSecret = process.env.PONTO_API_SECRET;
 
-  if (!url || !token) {
+  const faltando = [
+    !url && "PONTO_API_URL",
+    !clientId && "PONTO_CLIENT_ID",
+    !apiKey && "PONTO_API_KEY",
+    !apiSecret && "PONTO_API_SECRET",
+  ].filter(Boolean) as string[];
+
+  if (faltando.length > 0 || !url || !clientId || !apiKey || !apiSecret) {
     const ex = exemploParaData(data);
     return {
       marcacoes: ex.marcacoes,
       fonte: "exemplo",
       aviso:
-        "PONTO_API_URL e PONTO_API_TOKEN não configuradas na Vercel. Mostrando dados de exemplo." +
+        `Variáveis não configuradas na Vercel: ${faltando.join(", ")}. Mostrando dados de exemplo.` +
         ex.aviso,
     };
   }
 
   try {
+    // As três credenciais do fornecedor: conta (Client ID), aplicativo (API Key) e senha (Secret).
     const resposta = await fetch(`${url.replace(/\/$/, "")}/api/marcacoes?data=${data}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        "X-Client-Id": clientId,
+        "X-Api-Key": apiKey,
+        Authorization: `Bearer ${apiSecret}`,
+      },
       cache: "no-store",
     });
     if (!resposta.ok) {
-      throw new Error(`API de ponto respondeu ${resposta.status}`);
+      let detalhe = "";
+      try {
+        const corpo = (await resposta.json()) as { erro?: string };
+        if (corpo && corpo.erro) detalhe = `: ${corpo.erro}`;
+      } catch {
+        // corpo não era JSON; segue só com o status
+      }
+      throw new Error(`API de ponto respondeu ${resposta.status}${detalhe}`);
     }
     const lista = (await resposta.json()) as MarcacaoDoFornecedor[];
     return { marcacoes: lista.map(traduzir), fonte: "api", aviso: null };
