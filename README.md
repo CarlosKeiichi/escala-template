@@ -22,7 +22,9 @@ Checagem: você vê o seu repositório, com estes mesmos arquivos dentro.
 1. No seu projeto do Supabase, abra **SQL Editor** > **New query**.
 2. Abra o arquivo `supabase/schema.sql` deste repositório, copie tudo e cole no editor.
 3. Clique em **Run**.
-4. Em **Project Settings** > **API**, copie a **Project URL** e a chave **anon public**.
+4. Clique em **Connect** (botão no topo) e copie a **Project URL** (`https://xxxx.supabase.co`).
+   Depois, em **Settings** > **API Keys**, copie a chave **Publishable** (começa com `sb_publishable_`).
+   Se o seu projeto ainda mostrar a aba **Legacy** com a chave `anon public`, ela também funciona.
 
 Checagem: aparece "Success". Em **Table Editor** existem as tabelas `funcionarios`,
 `turnos`, `escalas`, `regras` e `configuracoes`, e `funcionarios` tem 8 linhas.
@@ -38,11 +40,16 @@ Checagem: o link `escala-xxx.vercel.app` abre e mostra "Banco conectado. 8 funci
 
 Se aparecer "variáveis não configuradas": confira os nomes (sem espaços) e clique em **Redeploy**.
 Se aparecer "tabelas não responderam": repita o Passo 2.
+Se o seu repositório não aparecer na lista da Vercel: clique em **Adjust GitHub App Permissions**, marque o repositório e volte.
+Se o projeto do Supabase aparecer como **Paused**: clique em **Restore project** e espere 1 a 2 minutos (projetos grátis pausam depois de 7 dias sem uso).
 
 ## Passo 4 · Conectar a IA (Claude Code na web)
 1. Acesse **claude.ai/code** com a sua conta Claude Pro.
-2. Conecte o GitHub e autorize o acesso ao seu repositório.
+2. Conecte o GitHub. Quando o GitHub perguntar a quais repositórios o Claude tem acesso,
+   escolha **All repositories** (ou marque o seu `escala-...`).
 3. Selecione o repositório. Não envie nenhuma mensagem ainda.
+
+Se o repositório não aparecer na lista: abra github.com/apps/claude, **Configure**, e inclua o repositório.
 
 Checagem: o nome do seu repositório aparece no Claude Code.
 

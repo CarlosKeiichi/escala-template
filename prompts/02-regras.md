@@ -7,4 +7,4 @@ Adicione as regras do meu restaurante na Escala da semana, com alertas visuais n
 3. Ninguém pode fechar um dia e abrir o dia seguinte [se essa regra existir; se não, apague esta linha].
 4. [Outra regra da casa, se tiver: ex. o João nunca fecha porque pega o último ônibus].
 
-Mostre um resumo no topo da grade: quantos alertas a semana tem. Mantenha tudo o que já funciona. Commit e push ao terminar.
+Mostre um resumo no topo da grade: quantos alertas a semana tem. Mantenha tudo o que já funciona. Ao terminar, commit e push direto na branch main, sem pull request.

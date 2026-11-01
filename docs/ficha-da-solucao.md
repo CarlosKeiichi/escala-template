@@ -28,3 +28,31 @@ Preencha à mão antes de pedir qualquer coisa à IA. As respostas viram os colc
 
 Regra de ouro: regra concreta é regra que dá para contar. "3 no salão sexta e sábado" vale.
 "Gente suficiente" não vale.
+
+---
+
+# Verso · Mapa dos problemas da minha operação
+
+## Exercício 1 · três tarefas do dia a dia que a IA poderia resolver
+1. ______________________________________________________________________
+2. ______________________________________________________________________
+3. ______________________________________________________________________
+
+## Exercício 2 · posicione cada problema no mapa
+Para cada um, responda: quanto dói (tempo, dinheiro, estresse por semana)? E quão fácil é
+resolver (os dados já existem em algum sistema ou planilha? a regra dá para escrever)?
+
+| | Fácil de resolver | Difícil de resolver |
+| --- | --- | --- |
+| **Dói muito** | COMECE AQUI: resolve hoje ou esta semana | VALE UM PROJETO: planeje, quebre em partes |
+| **Dói pouco** | BÔNUS RÁPIDO: faça quando sobrar tempo | DEIXE PARA LÁ: não vale o esforço agora |
+
+Problema 1 está em: ____________  Problema 2: ____________  Problema 3: ____________
+
+## As três perguntas antes de qualquer solução
+- O dado existe? (sistema, planilha, papel) ______________________________
+- A regra dá para escrever numa frase? __________________________________
+- Quem vai usar, e em que aparelho? _____________________________________
+
+A escala de funcionários costuma cair em "Comece aqui": dói toda semana, os dados são poucos
+e as regras dão para contar. Por isso ela é o exemplo desta oficina.

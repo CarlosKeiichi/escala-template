@@ -12,4 +12,4 @@ Construa:
 2. Tela "Escala da semana": grade com os dias da semana nas colunas e os turnos nas linhas. Em cada célula, escolho quais funcionários trabalham. Botão para avançar e voltar semana.
 3. Tudo salvo no Supabase e funcionando bem no celular, com botões grandes e texto em português.
 
-Não adicione login nem funcionalidades além dessas. Quando terminar, faça commit e push para a branch main.
+Não adicione login nem funcionalidades além dessas. Quando terminar, faça commit e push direto para a branch main, sem abrir pull request.

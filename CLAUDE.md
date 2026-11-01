@@ -31,7 +31,11 @@ sem formação técnica, com ajuda da IA. Leia este arquivo antes de qualquer ta
    mexer só nesse arquivo.
 8. Cada tela nova entra no menu (`src/config/menu.ts`) e funciona sem login (o login é um passo futuro).
 9. Mantenha o que já funciona. Mudanças pequenas e verificáveis; rode `npm run build` antes do commit.
-10. Ao terminar, faça commit com mensagem curta em português e push para `main`.
+10. Ao terminar, faça commit com mensagem curta em português e push direto para a branch `main`
+    (`git push origin HEAD:main`). Não abra pull request: a Vercel publica o que está na `main`.
+11. A API de ponto externa (`PONTO_API_URL`) só responde a partir do site publicado na Vercel.
+    Não tente chamá-la daqui: a rede deste ambiente não alcança a internet em geral e a falha
+    não significa erro no código. Confie em `docs/api-ponto.md` e em `docs/marcacoes-exemplo.json`.
 
 ## Como o dono descreve o restaurante
 As respostas às quatro perguntas (entrada, regras, saída, quem usa) chegam no pedido, entre
