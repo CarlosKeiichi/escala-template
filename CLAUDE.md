@@ -38,5 +38,10 @@ sem formação técnica, com ajuda da IA. Leia este arquivo antes de qualquer ta
     não significa erro no código. Confie em `docs/api-ponto.md` e em `docs/marcacoes-exemplo.json`.
 
 ## Como o dono descreve o restaurante
-As respostas às quatro perguntas (entrada, regras, saída, quem usa) chegam no pedido, entre
-colchetes. Respeite as regras da casa descritas ali; elas valem mais que qualquer padrão.
+Há dois caminhos, e os dois terminam no mesmo lugar:
+- `/comecar` (comando em `.claude/commands/comecar.md`): você entrevista o dono numa única mensagem,
+  registra as respostas em `src/config/restaurante.ts` e constrói a Entrega 1 depois do "pode fazer".
+- Prompts prontos (pasta `prompts/`): as respostas às quatro perguntas (entrada, regras, saída, quem usa)
+  chegam no pedido, entre colchetes.
+Se `src/config/restaurante.ts` existir, leia-o antes de qualquer tarefa: ele vale mais que qualquer padrão.
+Respeite as regras da casa descritas ali ou no pedido.
