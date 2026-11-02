@@ -1,11 +1,8 @@
 Antes de fazer qualquer coisa, me mostre um plano curto do que você vai construir e espere minha aprovação.
 
-Quero a primeira versão do sistema de escala do meu restaurante, usando as tabelas que já existem no Supabase (veja supabase/schema.sql e o CLAUDE.md).
+Quero a primeira versão do sistema de escala do meu restaurante, usando as tabelas e os dados de exemplo que já existem no Supabase (veja supabase/schema.sql e o CLAUDE.md).
 
-Meu restaurante: [nome], [tipo: ex. pizzaria, restaurante a la carte, hamburgueria].
-Funcionamento: [dias e horários: ex. terça a domingo, 11h30 às 15h e 18h às 23h].
-Turnos que existem: [ex. almoço, jantar, dia inteiro].
-Funções: [ex. cozinha, salão, caixa, bar, entregador].
+Meu restaurante se chama [nome do restaurante]. Por enquanto, use os turnos (Almoço e Jantar), as funções e os funcionários de exemplo que já estão no banco: não apague, não renomeie e não crie turnos novos. Os dados do meu restaurante de verdade entram depois.
 
 Construa:
 1. Tela "Equipe": lista de funcionários com nome, função e telefone; adicionar, editar e desativar.
