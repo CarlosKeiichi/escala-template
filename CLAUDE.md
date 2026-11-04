@@ -8,7 +8,7 @@ sem formação técnica, com ajuda da IA. Leia este arquivo antes de qualquer ta
 - Banco de dados Supabase (Postgres) com as tabelas em `supabase/schema.sql`:
   `funcionarios`, `turnos`, `escalas`, `regras`, `configuracoes`. Já há dados de exemplo.
 - Cliente do Supabase em `src/lib/supabase.ts` (usa `NEXT_PUBLIC_SUPABASE_URL` e
-  `NEXT_PUBLIC_SUPABASE_ANON_KEY`).
+  `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` ou o nome antigo `NEXT_PUBLIC_SUPABASE_ANON_KEY`).
 - Tipos das tabelas em `src/lib/tipos.ts`; funções de data em `src/lib/datas.ts`.
 - Identidade visual (nome, cores, logo) em `src/config/identidade.ts`; menu em `src/config/menu.ts`.
 - Layout com cabeçalho e menu em `src/app/layout.tsx` e `src/components/Cabecalho.tsx`.
