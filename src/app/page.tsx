@@ -52,7 +52,7 @@ export default function Inicio() {
           <p className="mt-2 text-red-700">
             As variáveis do Supabase não foram configuradas. Na Vercel, em Settings &gt;
             Environment Variables, adicione NEXT_PUBLIC_SUPABASE_URL e
-            NEXT_PUBLIC_SUPABASE_ANON_KEY e faça Redeploy.
+            NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (ou ANON_KEY) e faça Redeploy.
           </p>
         )}
         {estado.tipo === "erro" && (
