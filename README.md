@@ -32,10 +32,11 @@ Checagem: aparece "Success". Em **Table Editor** existem as tabelas `funcionario
 
 ## Passo 3 · Publicar (Vercel)
 1. Na Vercel, **Add New** > **Project** > **Import** no repositório do Passo 1.
-2. Em **Environment Variables**, adicione exatamente estes dois nomes, com os valores do Passo 2:
+2. Em **Environment Variables**, cole o bloco `.env.local` que o botão **Connect** do Supabase mostra
+   (aba Framework, Next.js). São duas linhas:
    - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-3. Clique em **Deploy** e aguarde 1 a 2 minutos.
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (o nome antigo `NEXT_PUBLIC_SUPABASE_ANON_KEY` também funciona)
+3. Clique em **Create Project** (em algumas contas aparece **Deploy**) e aguarde 1 a 2 minutos.
 
 Checagem: o link `escala-xxx.vercel.app` abre e mostra "Banco conectado. 8 funcionários e 2 turnos cadastrados".
 
